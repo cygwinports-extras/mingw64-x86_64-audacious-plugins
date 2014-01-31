@@ -1,0 +1,32 @@
+CROSS_HOST="x86_64-w64-mingw32"
+inherit cross
+
+NAME="mingw64-x86_64-audacious-plugins"
+VERSION=3.4.3
+RELEASE=1
+CATEGORY="Devel"
+SUMMARY="Plugins for Win64 Audacious media player"
+DESCRIPTION="Audacious is an advanced audio player. It is free, lightweight,
+based on GTK+, runs on Linux and many other *nix platforms and is focused on
+audio quality and supporting a wide range of audio codecs. Audacious is a fork
+of Beep Media Player (BMP), which itself forked from XMMS."
+HOMEPAGE="http://audacious-media-player.org/"
+SRC_URI="http://distfiles.audacious-media-player.org/audacious-plugins-${VERSION}.tar.bz2"
+SRC_DIR="audacious-plugins-${VERSION}"
+PATCH_URI="3.4.3-cross-compile.patch"
+
+NO_AUTOPOINT=1
+#NO_ACLOCAL=1
+
+src_compile() {
+	cd ${S}
+	cygautoreconf
+	lndirs
+	cd ${B}
+	# amidiplug: hardcoded path to its own plugins
+	# aosd: requires cairo-xrender
+	cygconf --disable-alsa \
+		--disable-amidiplug \
+		--disable-aosd
+	cygmake
+}
