@@ -2,7 +2,7 @@ CROSS_HOST="x86_64-w64-mingw32"
 inherit cross
 
 NAME="mingw64-x86_64-audacious-plugins"
-VERSION=3.4.3
+VERSION=3.6.2
 RELEASE=1
 CATEGORY="Devel"
 SUMMARY="Plugins for Win64 Audacious media player"
@@ -17,6 +17,8 @@ PATCH_URI="3.4.3-cross-compile.patch"
 
 NO_AUTOPOINT=1
 #NO_ACLOCAL=1
+# unistd.h:#define ftruncate ftruncate64 conflicts with VFSFile::ftruncate()
+CPPFLAGS+=" -D_FILE_OFFSET_BITS_SET_FTRUNCATE"
 
 src_compile() {
 	cd ${S}

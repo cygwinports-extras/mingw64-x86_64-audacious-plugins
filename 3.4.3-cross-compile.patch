@@ -1,23 +1,26 @@
 --- origsrc/audacious-plugins-3.4.3/acinclude.m4	2014-01-03 18:57:03.000000000 -0600
 +++ src/audacious-plugins-3.4.3/acinclude.m4	2014-01-31 03:47:38.698396400 -0600
-@@ -122,7 +122,7 @@ define([BigName], [translit([$1], [a-z],
- ifdef([aud_get_plugin_dirs_defined],
- [pluginsubs="$pluginsubs,\\\"$1\\\""],
- [pluginsubs="\\\"$1\\\""])
--BigName[]_PLUGIN_DIR=`pkg-config audacious --variable=[]Name[]`
-+BigName[]_PLUGIN_DIR=`$PKG_CONFIG audacious --variable=[]Name[]`
- AC_SUBST(BigName[]_PLUGIN_DIR)dnl
- define([aud_get_plugin_dirs_defined],[1])dnl
- ])dnl
-@@ -186,10 +186,10 @@ AC_PROG_MAKE_SET
+@@ -110,12 +110,6 @@ if test $HAVE_LINUX = yes ; then
+ 	LDFLAGS="$LDFLAGS -Wl,-z,defs"
+ fi
+ 
+-dnl MinGW needs -march=i686 for atomics
+-dnl ===================================
+-if test $HAVE_MSWINDOWS = yes ; then
+-	CFLAGS="$CFLAGS -march=i686"
+-fi
+-
+ dnl Byte order
+ dnl ==========
+ AC_C_BIGENDIAN([BIGENDIAN=1], [BIGENDIAN=0],
+@@ -186,9 +186,9 @@ AC_PROG_MAKE_SET
  AC_PATH_PROG([RM], [rm])
  AC_PATH_PROG([MV], [mv])
  AC_PATH_PROG([CP], [cp])
 -AC_PATH_PROG([AR], [ar])
-+AC_PATH_TOOL([AR], [ar])
- AC_PATH_PROG([TR], [tr])
 -AC_PATH_PROG([RANLIB], [ranlib])
 -AC_PATH_PROG([WINDRES], [windres])
++AC_PATH_TOOL([AR], [ar])
 +AC_PATH_TOOL([RANLIB], [ranlib])
 +AC_PATH_TOOL([WINDRES], [windres])
  
